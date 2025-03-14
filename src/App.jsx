@@ -19,9 +19,98 @@ function App() {
       const content = contentLeftRef.current;
       const mainLeft = mainLeftRef.current;
       const wrapper = wrapperLeftRef.current;
+      const mainRight = mainRightRef.current;
 
       // Set wrapper height based on content
       wrapper.style.height = content.getBoundingClientRect().height + "px";
+
+      // Get initial widths based on screen size
+      const getInitialWidths = () => {
+        if (window.innerWidth <= 768) {
+          return { right: "12vw", left: "88vw", content: "0vw" };
+        }
+        return { right: "5vw", left: "95vw", content: "0vw" };
+      };
+
+      // Get hover widths based on screen size
+      const getHoverWidths = () => {
+        if (window.innerWidth <= 768) {
+          return { right: "15vw", left: "85vw", content: "-3vw" };
+        }
+        return { right: "6vw", left: "94vw", content: "0vw" };
+      };
+
+      const initialWidths = getInitialWidths();
+
+      // Initial states
+      gsap.set(mainLeftRef.current, { width: "100vw" });
+      gsap.set(mainRightRef.current, { width: "0vw" });
+      gsap.set(contentLeftRef.current, { x: "5vw" });
+
+      // Initial animation
+      gsap.to(mainLeftRef.current, {
+        width: initialWidths.left,
+        duration: 1.5,
+        ease: "power2.inOut",
+        delay: 1,
+      });
+
+      gsap.to(mainRightRef.current, {
+        width: initialWidths.right,
+        duration: 1.5,
+        ease: "power2.inOut",
+        delay: 1,
+      });
+
+      gsap.to(contentLeftRef.current, {
+        x: initialWidths.content,
+        duration: 1.5,
+        ease: "power2.inOut",
+        delay: 1,
+      });
+
+      // Hover animations
+      const handleMouseEnter = () => {
+        const hoverWidths = getHoverWidths();
+        gsap.to(mainRightRef.current, {
+          width: hoverWidths.right,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+        gsap.to(mainLeftRef.current, {
+          width: hoverWidths.left,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+        gsap.to(contentLeftRef.current, {
+          x: hoverWidths.content,
+          duration: 0.3,
+          ease: "power2.inOut",
+        });
+      };
+
+      const handleMouseLeave = () => {
+        const initialWidths = getInitialWidths();
+        gsap.to(mainRightRef.current, {
+          width: initialWidths.right,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+        gsap.to(mainLeftRef.current, {
+          width: initialWidths.left,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+        gsap.to(contentLeftRef.current, {
+          x: initialWidths.content,
+          duration: 0.3,
+          ease: "power2.inOut",
+        });
+      };
+
+      // Add event listeners
+      mainRight.addEventListener("mouseenter", handleMouseEnter);
+      mainRight.addEventListener("mouseleave", handleMouseLeave);
 
       ScrollTrigger.create({
         trigger: mainLeft,
@@ -53,6 +142,8 @@ function App() {
 
       return () => {
         window.removeEventListener("resize", () => {});
+        mainRight.removeEventListener("mouseenter", handleMouseEnter);
+        mainRight.removeEventListener("mouseleave", handleMouseLeave);
       };
     },
     { scope: mainLeftRef }

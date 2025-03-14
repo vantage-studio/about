@@ -54,10 +54,11 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+  display: flex;
 }
 
 .main-left {
-  width: 100vw;
+  width: 95vw;
   height: 100vh;
   overflow-y: scroll;
   position: relative;
@@ -877,4 +878,13 @@ video::-webkit-media-controls-background {
   font-weight: 500;
   font-style: normal;
   font-display: swap;
+}
+
+.main-right {
+  height: 100vh;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: #c4aa8d;
+  cursor: pointer;
 }
