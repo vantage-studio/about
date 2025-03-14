@@ -543,19 +543,19 @@ video::-webkit-media-controls-background {
   background-repeat: no-repeat;
 }
 
-@media screen and (max-width: 1024px) {
+/* @media screen and (max-width: 1024px) {
   .left-content-awards {
     margin-bottom: 20vw;
   }
-}
+} */
 
 .newsletter-container {
-  margin: 8vw 0;
+  margin: 8vw 0 16vw;
 }
 
 @media (min-width: 1024px) {
   .newsletter-container {
-    margin: 20vw 0;
+    margin: 8vw 0 16vw;
   }
 }
 
