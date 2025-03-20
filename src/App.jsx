@@ -124,13 +124,12 @@ function App() {
           duration: 0.3,
           ease: "power2.out",
           onStart: () => {
-            if (!isRight) {
-              mainRightDisableLayerRef.current.style.zIndex = "11";
-            }
-          },
-          onComplete: () => {
             if (isRight) {
               mainRightDisableLayerRef.current.style.zIndex = "-1";
+              mainRightDisableLayerRef.current.style.cursor = "default";
+            } else {
+              mainRightDisableLayerRef.current.style.zIndex = "11";
+              mainRightDisableLayerRef.current.style.cursor = "pointer";
             }
           },
         });
@@ -142,11 +141,10 @@ function App() {
           onStart: () => {
             if (isRight) {
               mainLeftDisableLayerRef.current.style.zIndex = "11";
-            }
-          },
-          onComplete: () => {
-            if (!isRight) {
+              mainLeftDisableLayerRef.current.style.cursor = "pointer";
+            } else {
               mainLeftDisableLayerRef.current.style.zIndex = "-1";
+              mainLeftDisableLayerRef.current.style.cursor = "default";
             }
           },
         });
@@ -224,7 +222,7 @@ function App() {
         }
       });
 
-      // Initial state setup
+      // Call updateLayers immediately at the start
       updateLayers(isRightActive);
 
       // Remove the duplicate resize handlers and keep only one
@@ -286,7 +284,10 @@ function App() {
   return (
     <div className="main">
       {/* Main Content Container */}
-      <div className="main-left">
+      <div
+        className="main-left"
+        style={{ overflow: isRightActive ? "hidden" : "auto" }}
+      >
         {/* Navigation Bar */}
         <div className="nav-wrapper">
           <div
@@ -305,16 +306,17 @@ function App() {
             </button>
           </div>
         </div>
-        <div
-          ref={mainLeftDisableLayerRef}
-          className="view-disable-layer"
-          onClick={() => setIsRightActive(false)}
-          style={{
-            cursor: isRightActive ? "pointer" : "default",
-          }}
-        ></div>
         <div ref={mainLeftRef}>
-          <div className="scroll-wrapper-left">
+          <div
+            ref={mainLeftDisableLayerRef}
+            className="view-disable-layer"
+            onClick={() => setIsRightActive(false)}
+          ></div>
+          <div
+            className={`scroll-wrapper-left ${
+              isRightActive ? "right-active" : ""
+            }`}
+          >
             <div className="main-left-content">
               {/* Hero Section */}
               <div className="left-content-msg-one">
@@ -550,10 +552,18 @@ function App() {
           ref={mainRightDisableLayerRef}
           className="view-disable-layer"
           onClick={() => setIsRightActive(true)}
-          style={{
-            cursor: isRightActive ? "default" : "pointer",
-          }}
         ></div>
+        <div className="main-right-content">
+          <div className="main-right-team">
+            <div className="our-team-label-wrapper">
+              <span className="our-team-label">Our team</span>
+            </div>
+            <div className="team-nav">
+              <p className="team-nav-option active">Our team</p>
+              <p className="team-nav-option">Latest updates</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
