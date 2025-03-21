@@ -13,6 +13,7 @@ function App() {
   const mainLeftRef = useRef(null);
   const mainLeftDisableLayerRef = useRef(null);
   const mainRightDisableLayerRef = useRef(null);
+  const [searchValue, setSearchValue] = useState("");
 
   useGSAP(
     () => {
@@ -553,167 +554,69 @@ function App() {
           className="view-disable-layer"
           onClick={() => setIsRightActive(true)}
         ></div>
-        <div className="main-right-content">
+        <div
+          className="main-right-content"
+          style={{ overflow: isRightActive ? "auto" : "hidden" }}
+        >
           <div className="main-right-team">
-            <div className="our-team-label-wrapper">
-              <span className="our-team-label">Our team</span>
-            </div>
-            <div className="team-nav">
-              <p className="team-nav-option active">Our team</p>
-              <p className="team-nav-option">Latest updates</p>
-            </div>
+            {!isRightActive ? (
+              <div className="our-team-label-wrapper">
+                <span className="our-team-label-collapse">Our team</span>
+              </div>
+            ) : (
+              <div className="team-nav">
+                <p className="team-nav-option active">Our team</p>
+                <p className="team-nav-option">Latest updates</p>
+              </div>
+            )}
             <div className="our-team-container">
-              <div className="our-team-search-container">
-                <div className="input-container">
-                  <div className="input-wrapper">
-                    <input
-                      type="text"
-                      className="input-field"
-                      id="subscribe-email"
-                      placeholder="Name, role, location..."
-                      autocomplete="off"
-                    />
-                    <label htmlFor="subscribe-email" className="input-label">
-                      Name, role, location...
-                    </label>
+              {isRightActive ? (
+                <div className="team-search-container">
+                  <label className="team-search-label" htmlFor="team-search">
+                    <svg
+                      className="search-icon-svg"
+                      viewBox="0 0 19 20"
+                      fill="none"
+                    >
+                      <circle
+                        cx="11.022"
+                        cy="7.71491"
+                        r="6.71491"
+                        strokeWidth="2"
+                      />
+                      <line
+                        x1="5.11555"
+                        y1="14.2986"
+                        x2="0.707034"
+                        y2="18.7071"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                    <div className="team-search-input-box">
+                      <input
+                        type="text"
+                        className="team-search-input"
+                        id="team-search"
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                        placeholder="Name, role, location..."
+                        autoComplete="off"
+                      />
+                      <button
+                        className="team-search-input-clear-btn"
+                        type="button"
+                        onClick={() => setSearchValue("")}
+                      >
+                        Clear
+                      </button>
+                    </div>
+                  </label>
+                  <div className="show-all-btn">
+                    Show
+                    <button type="button">All</button>
                   </div>
                 </div>
-              </div>
-              <div className="our-team-members-container">
-                <div className="our-team-members-card">
-                  <div className="our-team-members-card-image"></div>
-                  <div className="our-team-members-card-name">
-                    <span className="our-team-members-card-name-text">
-                      Nanne de Ru
-                    </span>
-                    <span className="our-team-members-card-name-text-role">
-                      Founder
-                    </span>
-                  </div>
-                </div>
-                <div className="our-team-members-card">
-                  <div className="our-team-members-card-image our-team-members-card-image--paul"></div>
-                  <div className="our-team-members-card-name">
-                    <span className="our-team-members-card-name-text">
-                      Paul Stavert
-                    </span>
-                    <span className="our-team-members-card-name-text-role">
-                      Partner Architect, Rotterdam
-                    </span>
-                  </div>
-                </div>
-                <div className="our-team-members-card">
-                  <div className="our-team-members-card-image our-team-members-card-image--stefan"></div>
-                  <div className="our-team-members-card-name">
-                    <span className="our-team-members-card-name-text">
-                      Stefan Prins
-                    </span>
-                    <span className="our-team-members-card-name-text-role">
-                      Partner Architect, Rotterdam
-                    </span>
-                  </div>
-                </div>
-                <div className="our-team-members-card">
-                  <div className="our-team-members-card-image our-team-members-card-image--johanne"></div>
-                  <div className="our-team-members-card-name">
-                    <span className="our-team-members-card-name-text">
-                      Johanne Borthne
-                    </span>
-                    <span className="our-team-members-card-name-text-role">
-                      Partner Architect, Oslo
-                    </span>
-                  </div>
-                </div>
-
-                <div className="our-team-members-card">
-                  <div className="our-team-members-card-image"></div>
-                  <div className="our-team-members-card-name">
-                    <span className="our-team-members-card-name-text">
-                      Nanne de Ru
-                    </span>
-                    <span className="our-team-members-card-name-text-role">
-                      Founder
-                    </span>
-                  </div>
-                </div>
-                <div className="our-team-members-card">
-                  <div className="our-team-members-card-image our-team-members-card-image--paul"></div>
-                  <div className="our-team-members-card-name">
-                    <span className="our-team-members-card-name-text">
-                      Paul Stavert
-                    </span>
-                    <span className="our-team-members-card-name-text-role">
-                      Partner Architect, Rotterdam
-                    </span>
-                  </div>
-                </div>
-                <div className="our-team-members-card">
-                  <div className="our-team-members-card-image our-team-members-card-image--stefan"></div>
-                  <div className="our-team-members-card-name">
-                    <span className="our-team-members-card-name-text">
-                      Stefan Prins
-                    </span>
-                    <span className="our-team-members-card-name-text-role">
-                      Partner Architect, Rotterdam
-                    </span>
-                  </div>
-                </div>
-                <div className="our-team-members-card">
-                  <div className="our-team-members-card-image our-team-members-card-image--johanne"></div>
-                  <div className="our-team-members-card-name">
-                    <span className="our-team-members-card-name-text">
-                      Johanne Borthne
-                    </span>
-                    <span className="our-team-members-card-name-text-role">
-                      Partner Architect, Oslo
-                    </span>
-                  </div>
-                </div>
-                <div className="our-team-members-card">
-                  <div className="our-team-members-card-image"></div>
-                  <div className="our-team-members-card-name">
-                    <span className="our-team-members-card-name-text">
-                      Nanne de Ru
-                    </span>
-                    <span className="our-team-members-card-name-text-role">
-                      Founder
-                    </span>
-                  </div>
-                </div>
-                <div className="our-team-members-card">
-                  <div className="our-team-members-card-image our-team-members-card-image--paul"></div>
-                  <div className="our-team-members-card-name">
-                    <span className="our-team-members-card-name-text">
-                      Paul Stavert
-                    </span>
-                    <span className="our-team-members-card-name-text-role">
-                      Partner Architect, Rotterdam
-                    </span>
-                  </div>
-                </div>
-                <div className="our-team-members-card">
-                  <div className="our-team-members-card-image our-team-members-card-image--stefan"></div>
-                  <div className="our-team-members-card-name">
-                    <span className="our-team-members-card-name-text">
-                      Stefan Prins
-                    </span>
-                    <span className="our-team-members-card-name-text-role">
-                      Partner Architect, Rotterdam
-                    </span>
-                  </div>
-                </div>
-                <div className="our-team-members-card">
-                  <div className="our-team-members-card-image our-team-members-card-image--johanne"></div>
-                  <div className="our-team-members-card-name">
-                    <span className="our-team-members-card-name-text">
-                      Johanne Borthne
-                    </span>
-                    <span className="our-team-members-card-name-text-role">
-                      Partner Architect, Oslo
-                    </span>
-                  </div>
-                </div>
-              </div>
+              ) : null}
             </div>
           </div>
         </div>

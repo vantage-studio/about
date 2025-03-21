@@ -902,11 +902,13 @@ video::-webkit-media-controls-background {
   position: fixed;
   top: 0;
   z-index: 11;
+  display: flex;
+  flex-direction: column;
 }
 
 @media screen and (min-width: 1024px) {
   .main-right {
-    width: 35vw;
+    width: 34vw;
   }
 }
 
@@ -962,14 +964,56 @@ video::-webkit-media-controls-background {
 }
 
 .main-right-content {
-  position: relative;
+  flex: 1;
+  height: 100%;
   padding: 0 2vw;
-  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .main-right-team {
   display: flex;
   flex-direction: column;
+}
+
+.our-team-label-wrapper {
+  display: flex;
+  justify-content: left;
+  margin-top: 75px;
+  margin-left: -18px;
+}
+
+.our-team-label-collapse {
+  display: flex;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  transform: rotate(90deg);
+  position: relative;
+}
+
+.our-team-label-collapse::before {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: #000;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.main-right:not(:hover) .our-team-label-collapse::before {
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.main-right:hover .our-team-label-collapse::before {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 .team-nav {
   display: flex;
@@ -983,126 +1027,7 @@ video::-webkit-media-controls-background {
   transition: color 0.4s ease;
   font-size: 1.2vw;
   font-size: 18px;
-  display: none;
 }
-.right-active .team-nav-option {
-  display: block;
-}
-.right-active .our-team-label-wrapper {
-  display: none;
-}
-.our-team-search-container {
-  opacity: 0;
-}
-.our-team-container {
-  transition: transform 0.3s ease;
-  transform: translateX(-3vw);
-}
-.right-active .our-team-container {
-  transform: translateX(0vw);
-}
-.right-active .our-team-search-container {
-  opacity: 1;
-}
-.our-team-members-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2vw;
-}
-.our-team-members-card {
-  display: flex;
-  gap: 1vw;
-  cursor: pointer;
-}
-.our-team-members-card-image {
-  width: 5vw;
-  height: 5vw;
-  background-image: url("https://static.powerhouse-company.com/wp-content/uploads/2019/12/11152631/Powerhouse-Company-Nanne-de-Ru-150x150.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.5;
-}
-.our-team-members-card-image--paul {
-  background-image: url("https://static.powerhouse-company.com/wp-content/uploads/2024/10/03153919/Paul-Stavert.jpg");
-}
-.our-team-members-card-image--stefan {
-  background-image: url("https://static.powerhouse-company.com/wp-content/uploads/2023/10/09152221/Crops_Stefan-Prins-150x150.jpg");
-}
-.our-team-members-card-image--johanne {
-  background-image: url("https://static.powerhouse-company.com/wp-content/uploads/2019/12/11152602/Powerhouse-Company-Johanne-Borthne-150x150.jpg");
-}
-
-.right-active .our-team-members-card-image {
-  opacity: 1;
-}
-.our-team-members-card-name {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.2vw;
-  font-weight: 400;
-  font-family: Graphik, Helvetica, Arial, sans-serif;
-  letter-spacing: 0;
-  line-height: 1.4em;
-  opacity: 0;
-  font-size: 1vw;
-  transition: transform 0.3s ease;
-}
-.right-active .our-team-members-card-name {
-  opacity: 1;
-}
-.our-team-members-card-name-text {
-}
-.our-team-members-card-name-text-role {
-  opacity: 0.5;
-}
-
-.our-team-members-card:hover .our-team-members-card-name {
-  transform: translateX(0.2vw);
-}
-
-.our-team-label-wrapper {
-  display: flex;
-  justify-content: left;
-  margin-top: 75px;
-  margin-left: -18px;
-}
-
-.our-team-label {
-  display: flex;
-  font-size: 14px;
-  font-weight: 500;
-  color: #000;
-  transform: rotate(90deg);
-  position: relative;
-}
-
-.our-team-label::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 1.5px;
-  background: #000;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-
-/* Add this new rule for hover exit */
-.main-right:not(:hover) .our-team-label::after {
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
-}
-
-.main-right:hover .our-team-label::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
 .team-nav-option:hover {
   color: #000;
 }
@@ -1110,10 +1035,155 @@ video::-webkit-media-controls-background {
   cursor: default;
   color: #000;
 }
+.team-search-container {
+  margin-bottom: 10vw;
+  font-size: 14px;
+  height: 42px;
+}
+.team-search-label {
+  display: flex;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.search-icon-svg {
+  flex: 0 0 4vw;
+  font-size: 14px;
+  max-width: 22px;
+}
+.search-icon-svg circle,
+.search-icon-svg line {
+  stroke: #000;
+}
+.team-search-input-box,
+.team-search-input {
+  display: flex;
+  flex: 1;
+}
+.team-search-input {
+  border: none;
+  outline: none;
+  margin: 0 2.5vw;
+  font-size: 14px;
+  background: transparent;
+  transition: opacity 0.25s 0.25s, visibility 0s 0.25s;
+}
+.team-search-input:disabled {
+  opacity: 0;
+  visibility: hidden;
+}
+.team-search-input::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.35);
+  text-indent: 4px;
+}
+.team-search-input::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.35);
+  text-indent: 4px;
+}
+.team-search-input:-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.35);
+  text-indent: 4px;
+}
+.team-search-input::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+  text-indent: 4px;
+}
+.team-search-input-clear-btn {
+  white-space: nowrap;
+  position: relative;
+  top: 2px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.45s cubic-bezier(0.215, 0.61, 0.355, 1);
+  display: none;
+  background: none;
+  border: none;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+}
+.team-search-input:not(:placeholder-shown) + .team-search-input-clear-btn {
+  opacity: 0.5;
+  display: block;
+}
+.team-search-input:not(:placeholder-shown)
+  + .team-search-input-clear-btn:hover {
+  opacity: 1;
+  color: rgba(0, 0, 0, 0.7);
+}
+.show-all-btn {
+  margin-top: 22px;
+  text-align: right;
+  white-space: nowrap;
+}
+.show-all-btn button {
+  position: relative;
+  cursor: pointer;
+}
+
+.show-all-btn button:after,
+.show-all-btn button:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 1px;
+  width: 100%;
+  display: block;
+  background: #000;
+  -webkit-transition: -webkit-transform 0.45s
+    cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition: -webkit-transform 0.45s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition: transform 0.45s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition: transform 0.45s cubic-bezier(0.215, 0.61, 0.355, 1),
+    -webkit-transform 0.45s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.show-all-btn button:before {
+  -webkit-transform-origin: right;
+  transform-origin: right;
+  -webkit-transform: none;
+  transform: none;
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
+}
+.show-all-btn button:after {
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: left;
+  transform-origin: left;
+}
+@media (hover: hover) {
+  .show-all-btn button:hover:before {
+    -webkit-transition-delay: 0s;
+    transition-delay: 0s;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+  }
+  .show-all-btn button:hover:after {
+    -webkit-transition-delay: 0.3s;
+    transition-delay: 0.3s;
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+  }
+}
 
 @media screen and (min-width: 1024px) {
   .team-nav-option {
     font-size: 18px;
+  }
+  .team-search-container {
+    font-size: 16px;
+  }
+  .search-icon-svg {
+    flex: 0 0 1.4vw;
+    font-size: 18px;
+  }
+  .team-search-input {
+    margin: 0 0.6vw;
+    font-size: 18px;
+  }
+  .show-all-btn {
+    margin-top: 1.4vw;
   }
 }
 
