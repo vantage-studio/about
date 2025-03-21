@@ -964,6 +964,7 @@ video::-webkit-media-controls-background {
 .main-right-content {
   position: relative;
   padding: 0 2vw;
+  overflow-x: hidden;
 }
 
 .main-right-team {
@@ -990,6 +991,77 @@ video::-webkit-media-controls-background {
 .right-active .our-team-label-wrapper {
   display: none;
 }
+.our-team-search-container {
+  opacity: 0;
+}
+.our-team-container {
+  transition: transform 0.3s ease;
+  transform: translateX(-3vw);
+}
+.right-active .our-team-container {
+  transform: translateX(0vw);
+}
+.right-active .our-team-search-container {
+  opacity: 1;
+}
+.our-team-members-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2vw;
+}
+.our-team-members-card {
+  display: flex;
+  gap: 1vw;
+  cursor: pointer;
+}
+.our-team-members-card-image {
+  width: 5vw;
+  height: 5vw;
+  background-image: url("https://static.powerhouse-company.com/wp-content/uploads/2019/12/11152631/Powerhouse-Company-Nanne-de-Ru-150x150.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+}
+.our-team-members-card-image--paul {
+  background-image: url("https://static.powerhouse-company.com/wp-content/uploads/2024/10/03153919/Paul-Stavert.jpg");
+}
+.our-team-members-card-image--stefan {
+  background-image: url("https://static.powerhouse-company.com/wp-content/uploads/2023/10/09152221/Crops_Stefan-Prins-150x150.jpg");
+}
+.our-team-members-card-image--johanne {
+  background-image: url("https://static.powerhouse-company.com/wp-content/uploads/2019/12/11152602/Powerhouse-Company-Johanne-Borthne-150x150.jpg");
+}
+
+.right-active .our-team-members-card-image {
+  opacity: 1;
+}
+.our-team-members-card-name {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.2vw;
+  font-weight: 400;
+  font-family: Graphik, Helvetica, Arial, sans-serif;
+  letter-spacing: 0;
+  line-height: 1.4em;
+  opacity: 0;
+  font-size: 1vw;
+  transition: transform 0.3s ease;
+}
+.right-active .our-team-members-card-name {
+  opacity: 1;
+}
+.our-team-members-card-name-text {
+}
+.our-team-members-card-name-text-role {
+  opacity: 0.5;
+}
+
+.our-team-members-card:hover .our-team-members-card-name {
+  transform: translateX(0.2vw);
+}
+
 .our-team-label-wrapper {
   display: flex;
   justify-content: left;
