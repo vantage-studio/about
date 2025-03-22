@@ -1,0 +1,67 @@
+.employee-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.employee-content {
+  background: #ffffff;
+  width: 80vw;
+  max-width: 1200px;
+  height: 80vh;
+  border-radius: 2px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 4vw;
+}
+
+.close-button {
+  position: absolute;
+  top: 2vw;
+  right: 2vw;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.employee-content h2 {
+  font-size: 2.5vw;
+  margin-bottom: 1vw;
+  font-weight: normal;
+}
+
+.employee-content p {
+  font-size: 1.2vw;
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 2vw;
+}
+
+.employee-image {
+  width: 100%;
+  max-width: 300px;
+  margin: 2vw 0;
+}
+
+.employee-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 2px;
+}
