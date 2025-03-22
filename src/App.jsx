@@ -293,7 +293,7 @@ function App() {
   };
 
   const handleTeamMemberClick = (member) => {
-    navigate(`/employee/${member.id}`);
+    navigate(`employee/${member.id}`);
   };
 
   return (
@@ -698,8 +698,9 @@ function App() {
             <Outlet />
           </>
         }
-      />
-      <Route path="employee/:id" element={<Employee />} />
+      >
+        <Route path="employee/:id" element={<Employee />} />
+      </Route>
     </Routes>
   );
 }
