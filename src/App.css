@@ -1369,3 +1369,127 @@ video::-webkit-media-controls-background {
     opacity: 0.7;
   }
 }
+
+.join-team-section {
+  padding: 2.3vw 0;
+}
+
+.join-team-header {
+  margin-bottom: 2.3vw;
+}
+
+.join-team-title {
+  font-size: 18px;
+  font-weight: 500;
+  cursor: default;
+  color: #000;
+  letter-spacing: -0.01em;
+  padding: 1.4vw 0 2.6vw;
+}
+
+.job-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.3vw;
+}
+
+.job-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5vw;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.job-item:hover {
+  opacity: 0.7;
+}
+
+.job-icon,
+.job-image {
+  width: 4.6vw;
+  height: 4.6vw;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-right: 1.1vw;
+}
+
+.job-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.job-icon {
+  width: 4.6vw;
+  height: 4.6vw;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #d6e1e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.job-icon svg {
+  width: 40%;
+  height: 40%;
+  padding: 0;
+}
+
+.job-icon svg path {
+  fill: #000;
+}
+
+.job-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vw;
+  transition: transform 0.35s ease;
+}
+
+.job-item:hover .job-details {
+  transform: translateX(0.2vw);
+}
+
+.job-details strong {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.job-details p {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .job-icon,
+  .job-image {
+    width: 84px;
+    height: 84px;
+    margin-right: 16px;
+  }
+
+  .job-details strong {
+    font-size: 14px;
+  }
+
+  .job-details p {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .join-team-title {
+    padding: 5vw 0;
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .join-team-title {
+    padding: 6vw 0;
+    font-size: 15px;
+  }
+}

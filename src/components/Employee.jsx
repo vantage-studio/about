@@ -4,42 +4,51 @@ import { teamMembers } from "../data/teamMembers";
 import "./Employee.css";
 
 function Employee() {
+  // Navigation and routing hooks
   const navigate = useNavigate();
   const { id } = useParams();
+
+  // Find employee data from team members
   const employee = teamMembers.find((member) => member.id === id);
 
-  // Create refs
+  // Refs for animation elements
   const overlayRef = useRef(null);
   const containerRef = useRef(null);
 
+  // Handle modal close with animations
   const handleClose = useCallback(() => {
     const overlay = overlayRef.current;
     const container = containerRef.current;
 
     if (overlay && container) {
-      // Remove entry animations first
+      // Reset existing animations
       overlay.style.animation = "";
       container.style.animation = "";
 
-      // Force reflow
+      // Force reflow for animation reset
       void overlay.offsetWidth;
       void container.offsetWidth;
 
-      // Add exit classes
+      // Add exit animations
       overlay.classList.add("exit");
       container.classList.add("exit");
 
+      // Navigate after animation completes
       setTimeout(() => {
         navigate("/");
       }, 500);
     }
   }, [navigate]);
 
+  // Safety check for invalid employee
   if (!employee) return null;
 
   return (
     <>
+      {/* Overlay background */}
       <div className="employee-overlay" ref={overlayRef}></div>
+
+      {/* Main content container */}
       <div
         className="employee-content-container"
         ref={containerRef}
@@ -47,20 +56,29 @@ function Employee() {
       >
         <div className="employee-content">
           <div>
+            {/* Employee header info */}
             <div className="employee-designation">{employee.designation}</div>
             <div className="employee-name">{employee.name}</div>
+
+            {/* Employee image */}
             <div className="employee-image">
               <img src={employee.url} alt={employee.name} />
             </div>
+
+            {/* Employee details section */}
             <div className="employee-description-container">
               <div className="employee-description">
                 `{employee.description}`
               </div>
+
+              {/* Additional employee information */}
               <div className="employee-other-details">
                 <aside className="employee-Nationality">
                   <div>Nationality</div>
                   <span>Dutch</span>
                 </aside>
+
+                {/* Detailed employee description */}
                 <div className="employee-other-info">
                   <p>
                     I founded Powerhouse Company because I wanted to create a
@@ -89,6 +107,8 @@ function Employee() {
                     redevelopment projects need architects as team players and
                     visionary leaders.
                   </p>
+
+                  {/* Social links */}
                   <div className="employee-social-links">
                     <a
                       href="mailto:contact@example.com"
@@ -106,6 +126,8 @@ function Employee() {
                 </div>
               </div>
             </div>
+
+            {/* Featured projects section */}
             <div className="employee-featured-projects">
               <div className="employee-featured-projects-title">
                 Featured projects

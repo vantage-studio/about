@@ -12,11 +12,13 @@ import {
 } from "react-router-dom";
 import Employee from "./components/Employee";
 import { teamMembers } from "./data/teamMembers";
+import Contact from "./components/Contact";
 
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const [isRightActive, setIsRightActive] = useState(false);
+  const [showJoinTeam, setShowJoinTeam] = useState(false);
   const videoRef = useRef(null);
   const mainRightRef = useRef(null);
   const mainLeftRef = useRef(null);
@@ -24,6 +26,7 @@ function App() {
   const mainRightDisableLayerRef = useRef(null);
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
+  const mainRightContentRef = useRef(null);
 
   useGSAP(
     () => {
@@ -205,6 +208,7 @@ function App() {
       mainLeftDisableLayerRef.current.addEventListener("click", () => {
         if (isRightActive) {
           setIsRightActive(false);
+          setShowJoinTeam(false);
           updateLayers(false);
 
           // Add hover event listeners back
@@ -296,6 +300,43 @@ function App() {
     navigate(`employee/${member.id}`);
   };
 
+  const handleNavJoinTeamClick = () => {
+    if (!isRightActive) {
+      setIsRightActive(true);
+      setShowJoinTeam(true);
+
+      // Add the same animations as when clicking the right panel
+      gsap.to(mainRightRef.current, {
+        right: "0",
+        duration: 0.3,
+        ease: "power2.out",
+        overwrite: "auto",
+      });
+
+      // Update background colors
+      mainLeftRef.current.style.backgroundColor = "#c4aa8d";
+      mainLeftRef.current.style.overflow = "hidden";
+
+      // Scroll to top
+      if (mainRightContentRef.current) {
+        mainRightContentRef.current.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+    }
+  };
+
+  const handleJoinTeamClick = () => {
+    setShowJoinTeam(true);
+    if (mainRightContentRef.current) {
+      mainRightContentRef.current.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <Routes>
       <Route
@@ -318,10 +359,18 @@ function App() {
                     <a className="nav-button nav-link" href="/sustainability">
                       Sustainability
                     </a>
-                    <button aria-label="Contact us" className="nav-button">
+                    <button
+                      aria-label="Contact us"
+                      className="nav-button"
+                      onClick={() => navigate("/contact")}
+                    >
                       Contact us
                     </button>
-                    <button aria-label="Join the team" className="nav-button">
+                    <button
+                      aria-label="Join the team"
+                      className="nav-button"
+                      onClick={handleNavJoinTeamClick}
+                    >
                       Join the team
                     </button>
                   </div>
@@ -591,107 +640,198 @@ function App() {
                   onClick={() => setIsRightActive(true)}
                 ></div>
                 <div
+                  ref={mainRightContentRef}
                   className="main-right-content"
                   style={{ overflow: isRightActive ? "auto" : "hidden" }}
                 >
-                  <div className="main-right-team">
-                    {!isRightActive ? (
-                      <div className="our-team-label-wrapper">
-                        <span className="our-team-label-collapse">
-                          Our team
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="team-nav">
-                        <p className="team-nav-option active">Our team</p>
-                        <p className="team-nav-option">Latest updates</p>
-                      </div>
-                    )}
-                    <div className="our-team-container">
-                      {isRightActive ? (
-                        <div className="team-search-container">
-                          <label
-                            className="team-search-label"
-                            htmlFor="team-search"
-                          >
-                            <svg
-                              className="search-icon-svg"
-                              viewBox="0 0 19 20"
-                              fill="none"
+                  {!showJoinTeam ? (
+                    <div className="main-right-team">
+                      {!isRightActive ? (
+                        <div className="our-team-label-wrapper">
+                          <span className="our-team-label-collapse">
+                            Our team
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="team-nav">
+                          <p className="team-nav-option active">Our team</p>
+                          <p className="team-nav-option">Latest updates</p>
+                        </div>
+                      )}
+                      <div className="our-team-container">
+                        {isRightActive ? (
+                          <div className="team-search-container">
+                            <label
+                              className="team-search-label"
+                              htmlFor="team-search"
                             >
-                              <circle
-                                cx="11.022"
-                                cy="7.71491"
-                                r="6.71491"
-                                strokeWidth="2"
-                              />
-                              <line
-                                x1="5.11555"
-                                y1="14.2986"
-                                x2="0.707034"
-                                y2="18.7071"
-                                strokeWidth="2"
-                              />
-                            </svg>
-                            <div className="team-search-input-box">
-                              <input
-                                type="text"
-                                className="team-search-input"
-                                id="team-search"
-                                value={searchValue}
-                                onChange={(e) => setSearchValue(e.target.value)}
-                                placeholder="Name, role, location..."
-                                autoComplete="off"
-                              />
-                              <button
-                                className="team-search-input-clear-btn"
-                                type="button"
-                                onClick={() => setSearchValue("")}
+                              <svg
+                                className="search-icon-svg"
+                                viewBox="0 0 19 20"
+                                fill="none"
                               >
-                                Clear
-                              </button>
+                                <circle
+                                  cx="11.022"
+                                  cy="7.71491"
+                                  r="6.71491"
+                                  strokeWidth="2"
+                                />
+                                <line
+                                  x1="5.11555"
+                                  y1="14.2986"
+                                  x2="0.707034"
+                                  y2="18.7071"
+                                  strokeWidth="2"
+                                />
+                              </svg>
+                              <div className="team-search-input-box">
+                                <input
+                                  type="text"
+                                  className="team-search-input"
+                                  id="team-search"
+                                  value={searchValue}
+                                  onChange={(e) =>
+                                    setSearchValue(e.target.value)
+                                  }
+                                  placeholder="Name, role, location..."
+                                  autoComplete="off"
+                                />
+                                <button
+                                  className="team-search-input-clear-btn"
+                                  type="button"
+                                  onClick={() => setSearchValue("")}
+                                >
+                                  Clear
+                                </button>
+                              </div>
+                            </label>
+                            <div className="show-all-btn">
+                              Show
+                              <button type="button">All</button>
                             </div>
-                          </label>
-                          <div className="show-all-btn">
-                            Show
-                            <button type="button">All</button>
+                          </div>
+                        ) : null}
+                        <div
+                          className={`our-team-list ${
+                            !isRightActive ? "inActive" : ""
+                          }`}
+                        >
+                          {teamMembers.map((member) => (
+                            <div
+                              className="our-team-list-item"
+                              key={member.id}
+                              onClick={() => handleTeamMemberClick(member)}
+                            >
+                              <div className="our-team-list-item-img-wrapper">
+                                <img src={member.url} alt={member.name} />
+                                <div className="our-team-list-item-img-wrapper-overlay"></div>
+                              </div>
+                              <div className="our-team-list-item-info">
+                                <div className="our-team-list-item-name">
+                                  {member.name}
+                                </div>
+                                <div className="our-team-list-item-designation">
+                                  {member.designation}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        <button
+                          aria-label="Join the team"
+                          className="our-team-list-btn"
+                          onClick={handleJoinTeamClick}
+                        >
+                          Join the team
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="join-team-container">
+                      <div className="join-team-content">
+                        <div className="join-team-section">
+                          <div className="join-team-header">
+                            <div className="join-team-title">Job positions</div>
+                          </div>
+                          <div className="job-listings">
+                            <div className="job-list">
+                              <div className="job-item">
+                                <div className="job-icon">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 227.37 302.21"
+                                  >
+                                    <path
+                                      fill="#000"
+                                      d="M107.92,0H0V40.35l.29,1.27L.35,260,0,261.84v40.37H64.51V182.46l43.41,0c54.49,0,119.45-15.89,119.45-91.64C227.37,30.54,187.18,0,107.92,0ZM163.1,90.79C163.1,134.77,139,160,97,160H64.63V22.47H97C139,22.46,163.1,47.37,163.1,90.79Z"
+                                    />
+                                  </svg>
+                                </div>
+                                <div className="job-details">
+                                  <strong>
+                                    Ervaren Technisch Projectleider
+                                  </strong>
+                                  <p>Rotterdam - 16 Mar 2025</p>
+                                </div>
+                              </div>
+
+                              <div className="job-item">
+                                <div className="job-image">
+                                  <img
+                                    src="https://static.powerhouse-company.com/wp-content/uploads/2021/04/20100747/JI-150x150.jpg"
+                                    alt="Ingenieur"
+                                  />
+                                </div>
+                                <div className="job-details">
+                                  <strong>Ingenieur</strong>
+                                  <p>Rotterdam - 16 Jan 2025</p>
+                                </div>
+                              </div>
+
+                              <div className="job-item">
+                                <div className="job-image">
+                                  <img
+                                    src="https://static.powerhouse-company.com/wp-content/uploads/2019/12/18120114/AI-150x150.jpg"
+                                    alt="Architecture Internship"
+                                  />
+                                </div>
+                                <div className="job-details">
+                                  <strong>Architecture Internship</strong>
+                                  <p>Rotterdam - 21 Mar 2025</p>
+                                </div>
+                              </div>
+
+                              <div className="job-item">
+                                <div className="job-image">
+                                  <img
+                                    src="https://static.powerhouse-company.com/wp-content/uploads/2020/01/09085427/TI-150x150.jpg"
+                                    alt="Technische Ingenieur Stage"
+                                  />
+                                </div>
+                                <div className="job-details">
+                                  <strong>Technische Ingenieur Stage</strong>
+                                  <p>Rotterdam - 21 Mar 2025</p>
+                                </div>
+                              </div>
+
+                              <div className="job-item">
+                                <div className="job-image">
+                                  <img
+                                    src="https://static.powerhouse-company.com/wp-content/uploads/2021/06/06162456/FM-150x150.jpg"
+                                    alt="Facility Management Stage"
+                                  />
+                                </div>
+                                <div className="job-details">
+                                  <strong>Facility Management Stage</strong>
+                                  <p>Rotterdam - 28 May 2024</p>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      ) : null}
-                      <div
-                        className={`our-team-list ${
-                          !isRightActive ? "inActive" : ""
-                        }`}
-                      >
-                        {teamMembers.map((member) => (
-                          <div
-                            className="our-team-list-item"
-                            key={member.id}
-                            onClick={() => handleTeamMemberClick(member)}
-                          >
-                            <div className="our-team-list-item-img-wrapper">
-                              <img src={member.url} alt={member.name} />
-                              <div className="our-team-list-item-img-wrapper-overlay"></div>
-                            </div>
-                            <div className="our-team-list-item-info">
-                              <div className="our-team-list-item-name">
-                                {member.name}
-                              </div>
-                              <div className="our-team-list-item-designation">
-                                {member.designation}
-                              </div>
-                            </div>
-                          </div>
-                        ))}
                       </div>
-                      <button
-                        aria-label="Join the team"
-                        className="our-team-list-btn"
-                      >
-                        Join the team
-                      </button>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -700,6 +840,7 @@ function App() {
         }
       >
         <Route path="employee/:id" element={<Employee />} />
+        <Route path="contact" element={<Contact />} />
       </Route>
     </Routes>
   );
