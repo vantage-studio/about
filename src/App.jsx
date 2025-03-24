@@ -299,7 +299,7 @@ function App() {
   return (
     <Routes>
       <Route
-        path="/"
+        path=""
         element={
           <>
             <div className="main">

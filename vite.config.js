@@ -6,6 +6,8 @@ export default defineConfig({
   plugins: [react()],
   base: "/about/",
   server: {
-    historyApiFallback: true,
+    historyApiFallback: {
+      rewrites: [{ from: /^\/about\/.*/, to: "/index.html" }],
+    },
   },
 });
