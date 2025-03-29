@@ -364,7 +364,7 @@ function About() {
                 <a className="nav-button nav-link" href="/sustainability">
                   Sustainability
                 </a>
-                <Link to="/about/contact" className="nav-button">
+                <Link to="/about/about/contact" className="nav-button">
                   Contact
                 </Link>
                 <button

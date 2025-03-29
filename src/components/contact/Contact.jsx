@@ -22,7 +22,7 @@ function Contact() {
       container.classList.add("exit");
 
       setTimeout(() => {
-        navigate("/about");
+        navigate("/about/about");
       }, 500);
     }
   }, [navigate]);
